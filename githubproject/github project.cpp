@@ -1,0 +1,83 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+void signup() {
+    string username, password;
+
+    cout << "\n===== SIGN UP =====\n";
+    cout << "Enter Username: ";
+    cin >> username;
+
+    cout << "Enter Password: ";
+    cin >> password;
+
+    ofstream file("users.txt", ios::app);
+    file << username << " " << password << endl;
+    file.close();
+
+    cout << "\nAccount Created Successfully!\n";
+}
+
+void login() {
+    string username, password;
+    string user, pass;
+    bool found = false;
+
+    cout << "\n===== LOGIN =====\n";
+    cout << "Enter Username: ";
+    cin >> username;
+
+    cout << "Enter Password: ";
+    cin >> password;
+
+    ifstream file("users.txt");
+
+    while (file >> user >> pass) {
+        if (username == user && password == pass) {
+            found = true;
+            break;
+        }
+    }
+
+    file.close();
+
+    if (found)
+        cout << "\nLogin Successful!\n";
+    else
+        cout << "\nInvalid Username or Password!\n";
+}
+
+int main() {
+    int choice;
+
+    do {
+        cout << "\n===== STUDENT PLACEMENT PORTAL =====\n";
+        cout << "1. Sign Up\n";
+        cout << "2. Login\n";
+        cout << "3. Exit\n";
+        cout << "Enter Choice: ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1:
+            signup();
+            break;
+
+        case 2:
+            login();
+            break;
+
+        case 3:
+            cout << "\nThank You!\n";
+            break;
+
+        default:
+            cout << "\nInvalid Choice!\n";
+        }
+
+    } while (choice != 3);
+
+    return 0;
+}
